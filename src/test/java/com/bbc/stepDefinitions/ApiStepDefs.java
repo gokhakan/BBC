@@ -54,9 +54,10 @@ public class ApiStepDefs {
             Assert.assertFalse(arr.getJSONObject(i).getString("id").isEmpty());
         }
     }
+
     @Then("{string} is always {string}")
     public void contains(String field, String word) throws JSONException {
-        for (int i = 0; i <arr.length() ; i++) {
+        for (int i = 0; i < arr.length(); i++) {
             System.out.println("arr.getJSONObject(i).getString(\"segment_type\") = " + arr.getJSONObject(i).getString(field));
             Assert.assertTrue(arr.getJSONObject(i).getString("segment_type").equalsIgnoreCase(word));
         }
@@ -64,10 +65,14 @@ public class ApiStepDefs {
 
     @Then("{string} field is not empty")
     public void field_is_not_empty(String field) throws JSONException {
-        System.out.println("field = " + field);
-        System.out.println(arr.getJSONObject(0).getString(field));
+        String jsonstring = response.asString();
+        obj = new JSONObject(jsonstring);
+        arr = obj.getJSONArray("data");
+        for (int i = 0; i < arr.length(); i++) {
+            JSONObject titleObject = new JSONObject(arr.getJSONObject(i).getString("title_list"));
+            System.out.println(i + ": " + titleObject.getString(field));
+            Assert.assertFalse(titleObject.getString(field).isEmpty());
+
+        }
     }
-
-
-
-    }
+}
