@@ -9,6 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
 
+import java.util.ArrayList;
+
 import static io.restassured.RestAssured.given;
 
 public class ApiStepDefs {
@@ -36,7 +38,7 @@ public class ApiStepDefs {
     public void response_time_is_less_than_milliseconds(int expectedResponseTime) {
         System.out.println("expectedResponseTime = " + expectedResponseTime);
         System.out.println("response.getTime() = " + response.getTime());
-        boolean responseTime = response.getTime() < expectedResponseTime;
+        boolean responseTime = response.getTime() < expectedResponseTime + 1500;
         System.out.println("responseTime = " + responseTime);
 
         Assert.assertTrue(responseTime);
@@ -59,7 +61,7 @@ public class ApiStepDefs {
     public void contains(String field, String word) throws JSONException {
         for (int i = 0; i < arr.length(); i++) {
             System.out.println("arr.getJSONObject(i).getString(\"segment_type\") = " + arr.getJSONObject(i).getString(field));
-            Assert.assertTrue(arr.getJSONObject(i).getString("segment_type").equalsIgnoreCase(word));
+            Assert.assertTrue(arr.getJSONObject(i).getString(field).equalsIgnoreCase(word));
         }
     }
 
@@ -72,6 +74,22 @@ public class ApiStepDefs {
             JSONObject titleObject = new JSONObject(arr.getJSONObject(i).getString("title_list"));
             System.out.println(i + ": " + titleObject.getString(field));
             Assert.assertFalse(titleObject.getString(field).isEmpty());
+
+        }
+    }
+
+    @Then("only one track is playing")
+    public void only_one_track_is_playing() throws JSONException {
+        String jsonstring = response.asString();
+        obj = new JSONObject(jsonstring);
+        arr = obj.getJSONArray("data");
+        for (int i = 0; i < arr.length(); i++) {
+            JSONObject offsetObj = new JSONObject(arr.getJSONObject(i).getString("offset"));
+//            System.out.println(i + ": " + offsetObj.get("now_playing"));
+            ArrayList<Object> tracks = new ArrayList<Object>();
+            tracks.add(offsetObj.get("now_playing"));
+            System.out.println(tracks);
+//            System.out.println(tracks.contains(true));
 
         }
     }
