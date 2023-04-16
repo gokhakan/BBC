@@ -83,15 +83,20 @@ public class ApiStepDefs {
         String jsonstring = response.asString();
         obj = new JSONObject(jsonstring);
         arr = obj.getJSONArray("data");
+        int countOfTrue=0;
         for (int i = 0; i < arr.length(); i++) {
             JSONObject offsetObj = new JSONObject(arr.getJSONObject(i).getString("offset"));
-//            System.out.println(i + ": " + offsetObj.get("now_playing"));
             ArrayList<Object> tracks = new ArrayList<Object>();
             tracks.add(offsetObj.get("now_playing"));
-            System.out.println(tracks);
-//            System.out.println(tracks.contains(true));
 
+            for (Object track : tracks) {
+                if (track.toString().equalsIgnoreCase("True"))
+                    countOfTrue++;
+            }
         }
+        System.out.println("countOfTrue = "  + countOfTrue);
+        Assert.assertEquals(1, countOfTrue);
+
     }
     @Then("{string} value is displayed in Headers")
     public void value_is_displayed_in_Headers(String field) {
