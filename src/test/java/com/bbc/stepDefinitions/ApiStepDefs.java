@@ -100,6 +100,7 @@ public class ApiStepDefs {
     }
     @Then("{string} value is displayed in Headers")
     public void value_is_displayed_in_Headers(String field) {
-        System.out.println("field = " + field);
+        System.out.println(response.header("Date"));
+        Assert.assertTrue(response.header("date").equalsIgnoreCase("Fri, 21 May"));
     }
 }
