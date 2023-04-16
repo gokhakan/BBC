@@ -22,9 +22,15 @@ Feature: BBC RMS API Tests
 
 
 #  Task Scenario 4
-  @wip
+
   Scenario: Check now_playing
     Then only one track is playing
+
+#  Task Scenario 5
+  @wip
+  Scenario: Check Date in Headers
+    Then "Date" value is displayed in Headers
+
 
 
 

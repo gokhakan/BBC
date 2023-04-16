@@ -93,4 +93,8 @@ public class ApiStepDefs {
 
         }
     }
+    @Then("{string} value is displayed in Headers")
+    public void value_is_displayed_in_Headers(String field) {
+        System.out.println("field = " + field);
+    }
 }
