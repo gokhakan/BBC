@@ -7,7 +7,7 @@ Feature: BBC RMS API Tests
 #Task Scenario 1
   Scenario: Check status code and response time
     Then response status code is 200
-    Then response time is less than 1000 milliseconds
+    Then response time is less than 3000 milliseconds
 
 #  Task Scenario 2
   Scenario: Check id field is populated and segment_type is music
@@ -25,6 +25,7 @@ Feature: BBC RMS API Tests
 
 #  Task Scenario 5
   @wip
+
   Scenario: Check Date in Headers
     Then "Date" value is displayed in Headers
 

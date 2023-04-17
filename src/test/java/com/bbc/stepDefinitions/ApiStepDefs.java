@@ -90,6 +90,7 @@ public class ApiStepDefs {
             tracks.add(offsetObj.get("now_playing"));
 
             for (Object track : tracks) {
+                System.out.println("track = " + track);
                 if (track.toString().equalsIgnoreCase("True"))
                     countOfTrue++;
             }
